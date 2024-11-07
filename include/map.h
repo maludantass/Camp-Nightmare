@@ -1,4 +1,3 @@
-// include/map.h
 #ifndef MAP_H
 #define MAP_H
 
@@ -9,14 +8,16 @@
 extern char map[HEIGHT][WIDTH];
 extern int playerX;
 extern int playerY;
-extern int hunterX; // Adicione esta linha para declarar hunterX
-extern int hunterY; // Adicione esta linha para declarar hunterY
+extern int hunterX;
+extern int hunterY;
+extern int gameOver;  // Variável de controle para Game Over
 
 // Declaração das funções
 void renderMap();
 int canMove(int newX, int newY);
 void movePlayer(char direction);
-void moveHunter(); // Declaração da função de movimentação do caçador
+void moveHunter();
 void startGame();
+void gameOverScreen(); // Declaração da função de Game Over
 
 #endif // MAP_H

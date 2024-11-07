@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <termios.h>
 #include <sys/ioctl.h>
-#define WIDTH 60
-#define HEIGHT 30
+#include "map.h"  // Inclua o cabeçalho map.h
+
+int gameOver = 0; // Inicializa a variável gameOver como 0
 
 // Representação do mapa maior
 char map[HEIGHT][WIDTH] = {
@@ -99,6 +101,11 @@ void moveHunter() {
 
     if (canMove(hunterX + dx, hunterY)) hunterX += dx;
     if (canMove(hunterX, hunterY + dy)) hunterY += dy;
+
+    // Verifica colisão entre o caçador e o jogador
+    if (hunterX == playerX && hunterY == playerY) {
+        gameOverScreen(); // Chama a função Game Over imediatamente ao detectar colisão
+    }
 }
 
 void movePlayer(char direction) {
@@ -120,8 +127,24 @@ void movePlayer(char direction) {
     }
 }
 
+// Função para exibir a tela de "Game Over" e encerrar o jogo
+void gameOverScreen() {
+    printf("\033[2J\033[H"); // Limpa a tela
+    printf("###########################\n");
+    printf("#        GAME OVER        #\n");
+    printf("###########################\n");
+    printf("Pressione uma tecla pra encerrar o jogo!\n");
+
+    // Restaura o estado do terminal
+    printf("\033[0m");     // Restaura as configurações padrão do terminal
+    printf("\033[?25h");   // Mostra o cursor (caso tenha sido escondido)
+    fflush(stdout);
+
+    exit(0); // Encerra o programa imediatamente
+}
+
 void* hunterMovement(void* arg) {
-    while (1) {
+    while (!gameOver) {
         moveHunter();
         renderMap();
         sleep(1);
@@ -137,13 +160,11 @@ void startGame() {
     }
 
     char input;
-    while (1) {
+    while (!gameOver) {
         renderMap();
         scanf(" %c", &input);
         movePlayer(input);
         usleep(50000);
     }
-
-    pthread_join(hunterThread, NULL);
 }
 
