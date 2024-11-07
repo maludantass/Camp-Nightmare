@@ -28,5 +28,7 @@ void victoryScreen();      // Declaração da função de Tela de Vitória
 void initializeGame();     // Inicializa o jogo com a posição dos itens
 void checkForItems();      // Verifica se o jogador coletou um item
 void placeRandomItem(int *x, int *y);  // Posiciona um item aleatoriamente no mapa
+void* spawnHunter(void* arg);          // Thread que adiciona caçadores a cada 5 segundos
+void* hunterMovement(void* arg);    
 
 #endif // MAP_H
