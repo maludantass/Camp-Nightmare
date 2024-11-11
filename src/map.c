@@ -6,7 +6,7 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <time.h>
-#include "map.h"  // Inclua o cabeçalho map.h
+#include "map.h"  // Inclua o cabeçalho map.h #
 
 int gameOver = 0; // Inicializa a variável gameOver como 0
 int hasKey = 0;   // Variável para verificar se o jogador pegou a chave
