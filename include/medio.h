@@ -1,18 +1,15 @@
 #ifndef MEDIO_H
 #define MEDIO_H
 
+#include "hunter.h"//declarei o array em uma arquivo separadon pra ficar mlhr organizado
+
 #define WIDTH 80
 #define HEIGHT 30
 #define MAX_HUNTERS 5// Número máximo de caçadores no jogo
 
-// Estrutura para representar um caçador
-typedef struct {
-    int x;
-    int y;
-    int active; // 1 se o caçador está ativo, 0 se não
-} Hunter;
 
-extern Hunter hunters[MAX_HUNTERS]; // Array de caçadores
+
+
 
 // Declaração das variáveis globais
 extern char map[HEIGHT][WIDTH];

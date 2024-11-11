@@ -3,3 +3,4 @@ void runMenu() ;
 void startGame();
 void startGameMedio();
 void displayDifficultyMenu();
+void startGameFacil();

@@ -51,6 +51,7 @@ void runMenu() {
                     switch (difficultyChoice) {
                         case '1':
                             printf("\nDificuldade selecionada: Fácil\n");
+                            startGameFacil();
                             break;
                         case '2':
                             printf("\nDificuldade selecionada: Médio\n");
