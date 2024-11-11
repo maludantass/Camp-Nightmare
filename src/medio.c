@@ -10,7 +10,6 @@
 
 Hunter hunters[MAX_HUNTERS]; // Array de caçadores, inicializado aqui
 
-
 // Função para verificar se o jogador pode se mover para uma posição específica
 int canMove2(int newX, int newY) {
     return map[newY][newX] != '#';
@@ -38,7 +37,7 @@ void initializeGame2() {
 // Função que adiciona novos caçadores a cada 5 segundos em uma posição aleatória
 void* spawnHunter(void* arg) {
     while (!gameOver) {
-        sleep(5); // Aguarda 5 segundos para criar um novo caçador
+        sleep(5);
         for (int i = 0; i < MAX_HUNTERS; i++) {
             if (!hunters[i].active) {
                 placeRandomItem2(&hunters[i].x, &hunters[i].y);
@@ -50,23 +49,40 @@ void* spawnHunter(void* arg) {
     return NULL;
 }
 
-// Função que renderiza o mapa e todos os elementos (jogador, caçadores, itens)
-void renderMap2() {
-    printf("\033[2J\033[H");
+// Função para renderizar o HUD do inventário
+void renderInventoryHUD() {
+    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
+    printf("                                      =========================================\n");
+//usei essa gambiara do espaco pq ta bugado por enquanto kkkk
+}
+
+// Função para renderizar o mapa e todos os elementos (jogador, caçadores, itens) junto com o HUD
+void renderMapWithHUD() {
+    printf("\033[2J\033[H"); // Limpa a tela e move o cursor para o canto superior esquerdo
+
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-    int termWidth = w.ws_col;
-    int termHeight = w.ws_row;
-    int marginX = (termWidth - WIDTH) / 2;
-    int marginY = (termHeight - HEIGHT) / 2;
+    int termWidth = w.ws_col;    // Largura atual do terminal
+    int termHeight = w.ws_row;   // Altura atual do terminal
 
-    for (int y = 0; y < marginY; y++) {
+    int marginX = (termWidth - WIDTH) / 2;
+    int marginY = (termHeight - HEIGHT - 3) / 2; // Espaço para HUD e mapa
+
+    // Adiciona linhas em branco no topo para centralizar verticalmente
+    for (int i = 0; i < marginY; i++) {
         printf("\n");
     }
 
+    // Renderiza o HUD do inventário, centralizado horizontalmente
+    for (int i = 0; i < marginX; i++) {
+        printf(" ");
+    }
+    renderInventoryHUD();
+
+    // Renderiza o mapa, centralizado horizontalmente
     for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < marginX; x++) {
+        for (int i = 0; i < marginX; i++) {
             printf(" ");
         }
         for (int x = 0; x < WIDTH; x++) {
@@ -110,7 +126,7 @@ void checkForItems2() {
         printf("Você pegou a gasolina!\n");
     }
     if (playerX == carX && playerY == carY && hasKey && hasGasoline) {
-        victoryScreen2(); // Chama a função de vitória
+        victoryScreen2();
     }
 }
 
@@ -129,7 +145,6 @@ void moveHunters2() {
             if (canMove2(hunters[i].x + dx, hunters[i].y)) hunters[i].x += dx;
             if (canMove2(hunters[i].x, hunters[i].y + dy)) hunters[i].y += dy;
 
-            // Verifica colisão entre o caçador e o jogador
             if (hunters[i].x == playerX && hunters[i].y == playerY) {
                 gameOverScreen2();
             }
@@ -188,7 +203,7 @@ void gameOverScreen2() {
 void* hunterMovement2(void* arg) {
     while (!gameOver) {
         moveHunters2();
-        renderMap2();
+        renderMapWithHUD();
         sleep(1);
     }
     return NULL;
@@ -210,7 +225,7 @@ void startGameMedio() {
 
     char input;
     while (!gameOver) {
-        renderMap2();
+        renderMapWithHUD();
         scanf(" %c", &input);
         movePlayer2(input);
         usleep(50000);
