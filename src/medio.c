@@ -50,12 +50,22 @@ void* spawnHunter(void* arg) {
 }
 
 // Função para renderizar o HUD do inventário
-void renderInventoryHUD() {
-    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
-    printf("                                      =========================================\n");
-//usei essa gambiara do espaco pq ta bugado por enquanto kkkk
-}
 
+void renderInventoryHUD(int marginX) {
+    for (int i = 0; i < marginX; i++) {
+        printf(" ");
+    }
+    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
+
+    for (int i = 0; i < marginX; i++) {
+        printf(" ");
+    }
+    for (int i = 0; i < WIDTH; i++) {
+        printf("=");
+    }
+    printf("\n");
+}
+// Função para renderizar o HUD do inventário, centralizado com base em marginX
 // Função para renderizar o mapa e todos os elementos (jogador, caçadores, itens) junto com o HUD
 void renderMapWithHUD() {
     printf("\033[2J\033[H"); // Limpa a tela e move o cursor para o canto superior esquerdo
@@ -74,11 +84,8 @@ void renderMapWithHUD() {
         printf("\n");
     }
 
-    // Renderiza o HUD do inventário, centralizado horizontalmente
-    for (int i = 0; i < marginX; i++) {
-        printf(" ");
-    }
-    renderInventoryHUD();
+    // Renderiza o HUD com o separador centralizado usando marginX
+    renderInventoryHUD(marginX);
 
     // Renderiza o mapa, centralizado horizontalmente
     for (int y = 0; y < HEIGHT; y++) {
