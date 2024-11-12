@@ -2,6 +2,8 @@
 #define MEDIO_H
 
 #include "hunter.h" // Declaração do array de caçadores em um arquivo separado
+#include "screen.h" // Inclui screen.h para configurações de cor
+
 
 #define WIDTH 80
 #define HEIGHT 30

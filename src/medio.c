@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 #include <time.h>
 #include "medio.h"
+#include "screen.h"
 
 Hunter hunters[MAX_HUNTERS]; // Array de caçadores, inicializado aqui
 
@@ -65,10 +66,10 @@ void renderInventoryHUD(int marginX) {
     }
     printf("\n");
 }
-// Função para renderizar o HUD do inventário, centralizado com base em marginX
+
 // Função para renderizar o mapa e todos os elementos (jogador, caçadores, itens) junto com o HUD
 void renderMapWithHUD() {
-    printf("\033[2J\033[H"); // Limpa a tela e move o cursor para o canto superior esquerdo
+    screenClear(); // Limpa a tela e move o cursor para o canto superior esquerdo
 
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
@@ -94,32 +95,42 @@ void renderMapWithHUD() {
         }
         for (int x = 0; x < WIDTH; x++) {
             if (x == playerX && y == playerY) {
-                printf("P"); // Representação do jogador
+                screenSetColor(WHITE, BLACK); // Define a cor do jogador como branca
+                printf("P");
             } else {
                 int isHunter = 0;
                 for (int i = 0; i < MAX_HUNTERS; i++) {
                     if (hunters[i].active && x == hunters[i].x && y == hunters[i].y) {
-                        printf("H"); // Representação do caçador
+                        screenSetColor(LIGHTRED, BLACK); // Define a cor do caçador como vermelho claro
+                        printf("H");
                         isHunter = 1;
                         break;
                     }
                 }
                 if (!isHunter) {
                     if (x == keyX && y == keyY && !hasKey) {
-                        printf("K"); // Representação da chave
+                        screenSetColor(YELLOW, BLACK); // Define a cor da chave como amarela
+                        printf("K");
                     } else if (x == gasX && y == gasY && !hasGasoline) {
-                        printf("G"); // Representação da gasolina
+                        screenSetColor(GREEN, BLACK); // Define a cor da gasolina como verde
+                        printf("G");
                     } else if (x == carX && y == carY) {
-                        printf("C"); // Representação do carro
+                        screenSetColor(CYAN, BLACK); // Define a cor do carro como ciano
+                        printf("C");
+                    } else if (map[y][x] == '#') {
+                        screenSetColor(RED, BLACK); // Define a cor das paredes como vermelha
+                        printf("█");
                     } else {
-                        printf("%c", map[y][x]);
+                        screenSetColor(WHITE, BLACK); // Define a cor de fundo para áreas vazias
+                        printf(" ");
                     }
                 }
             }
         }
         printf("\n");
     }
-    fflush(stdout);
+    screenSetColor(WHITE, BLACK); // Restaura a cor padrão ao final
+    fflush(stdout); // Garante que o conteúdo seja impresso no terminal
 }
 
 // Função que verifica se o jogador coletou algum item
@@ -241,3 +252,6 @@ void startGameMedio() {
     pthread_join(hunterThread, NULL);
     pthread_join(spawnThread, NULL);
 }
+
+
+
