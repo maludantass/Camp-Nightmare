@@ -59,6 +59,7 @@ void runMenu() {
                             break;
                         case '3':
                             printf("\nDificuldade selecionada: Difícil\n");
+                            startGameDificil();
                             break;
                         default:
                             printf("\nOpção inválida. Retornando ao menu principal.\n");

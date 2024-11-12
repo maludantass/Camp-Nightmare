@@ -16,7 +16,7 @@
 #include "map.h"
 #include "medio.h"
 #include "facil.h"
-
+#include "dificil.h"
 
 int main() {
     // Inicia o menu do jogo "Camp Nightmare"

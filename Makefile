@@ -10,7 +10,7 @@ SRC_DIR = src
 INCLUDE_DIR = include
 
 # Lista de arquivos .c específicos
-SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/menu.c $(SRC_DIR)/map.c $(SRC_DIR)/keyboard.c $(SRC_DIR)/screen.c $(SRC_DIR)/timer.c $(SRC_DIR)/medio.c $(SRC_DIR)/facil.c
+SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/menu.c $(SRC_DIR)/map.c $(SRC_DIR)/keyboard.c $(SRC_DIR)/screen.c $(SRC_DIR)/timer.c $(SRC_DIR)/medio.c $(SRC_DIR)/facil.c $(SRC_DIR)/dificil.c
 
 # Bibliotecas necessárias (adicione aqui se necessário)
 LIBS =  -lpthread
