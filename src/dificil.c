@@ -8,18 +8,28 @@
 #include <time.h>
 #include "dificil.h"
 #include "keyboard.h"
+#include "screen.h"
 
 // Inicializa variáveis globais
 Hunter hunters3[MAX_HUNTERS_DIFICIL];
 Door doors[MAX_DOORS];
 
 // Funções auxiliares de inicialização
+
 void initializeDoors() {
     for (int i = 0; i < MAX_DOORS; i++) {
         doors[i].x = -1;
         doors[i].y = -1;
         doors[i].locked = 0;
     }
+}
+
+// Função para posicionar um item em uma posição aleatória no mapa
+void placeRandomItem3(int *x, int *y) {
+    do {
+        *x = rand() % WIDTH;
+        *y = rand() % HEIGHT;
+    } while (map[*y][*x] == '#' || (playerX == *x && playerY == *y));
 }
 
 // Função de tela de vitória
@@ -31,7 +41,7 @@ void victoryScreen3() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
+    
     exit(0);
 }
 
@@ -44,7 +54,7 @@ void gameOverScreen3() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
+
     exit(0);
 }
 
@@ -63,11 +73,9 @@ void moveHunters3() {
             int targetX = hunters3[i].x + dx;
             int targetY = hunters3[i].y + dy;
 
-            if (map[targetY][targetX] == '/') {
-                // Jason quebra a porta trancada
+            if (map[targetY][targetX] == '|') {
                 map[targetY][targetX] = ' ';
                 printf("Jason quebrou uma porta trancada!\n");
-                renderMapWithHUD3();
             } else if (canMove3(targetX, targetY)) {
                 hunters3[i].x = targetX;
                 hunters3[i].y = targetY;
@@ -80,7 +88,12 @@ void moveHunters3() {
     }
 }
 
+// Função para verificar se o jogador pode se mover para uma posição específica
+int canMove3(int newX, int newY) {
+    return map[newY][newX] != '#' && map[newY][newX] != '|';
+}
 
+// Função para inicializar o jogo, incluindo os itens e reset dos caçadores
 void initializeGame3() {
     srand(time(NULL));
     placeRandomItem3(&keyX, &keyY);
@@ -92,38 +105,22 @@ void initializeGame3() {
     }
 }
 
-// Funções de movimentação e verificação
-int canMove3(int newX, int newY) {
-    return map[newY][newX] != '#' && map[newY][newX] != '/';
-}
-
-void placeRandomItem3(int *x, int *y) {
-    do {
-        *x = rand() % WIDTH;
-        *y = rand() % HEIGHT;
-    } while (map[*y][*x] == '#' || (playerX == *x && playerY == *y));
-}
-
-int isAdjacentToDoor(int x, int y) {
-    for (int i = 0; i < MAX_DOORS; i++) {
-        if (doors[i].x != -1 && !doors[i].locked) {
-            if ((doors[i].x == x + 1 && doors[i].y == y) ||
-                (doors[i].x == x - 1 && doors[i].y == y) ||
-                (doors[i].x == x && doors[i].y == y + 1) ||
-                (doors[i].x == x && doors[i].y == y - 1)) {
-                return i;
+// Função para adicionar novos caçadores a cada 5 segundos em uma posição aleatória
+void* spawnHunter3(void* arg) {
+    while (!gameOver) {
+        sleep(5);
+        for (int i = 0; i < MAX_HUNTERS_DIFICIL; i++) {
+            if (!hunters3[i].active) {
+                placeRandomItem3(&hunters3[i].x, &hunters3[i].y);
+                hunters3[i].active = 1;
+                break;
             }
         }
     }
-    return -1;
-}
-void lockDoor(int doorIndex) {
-    doors[doorIndex].locked = 1;
-    map[doors[doorIndex].y][doors[doorIndex].x] = '/';  // Marca como porta trancada
-    printf("Porta trancada!\n");
+    return NULL;
 }
 
-// Função para adicionar uma porta aleatoriamente no mapa
+// Função para adicionar portas aleatoriamente no mapa
 void placeDoor() {
     for (int i = 0; i < MAX_DOORS; i++) {
         if (doors[i].x == -1) {
@@ -145,16 +142,101 @@ void placeDoor() {
     }
 }
 
-void* doorSpawner(void* arg) {
-    while (!gameOver) {
-        sleep(3);
-        placeDoor();
-        renderMapWithHUD3();
+// Função para verificar se o jogador está próximo de uma porta destrancada
+int isAdjacentToDoor(int x, int y) {
+    for (int i = 0; i < MAX_DOORS; i++) {
+        if (doors[i].x != -1 && !doors[i].locked) {
+            if ((doors[i].x == x + 1 && doors[i].y == y) ||
+                (doors[i].x == x - 1 && doors[i].y == y) ||
+                (doors[i].x == x && doors[i].y == y + 1) ||
+                (doors[i].x == x && doors[i].y == y - 1)) {
+                return i;
+            }
+        }
     }
-    return NULL;
+    return -1;
 }
 
-// Função principal de movimentação do jogador
+// Função para trancar uma porta específica
+void lockDoor(int doorIndex) {
+    doors[doorIndex].locked = 1;
+    map[doors[doorIndex].y][doors[doorIndex].x] = '|';
+    printf("Porta trancada!\n");
+}
+
+// Função que renderiza o mapa e todos os elementos (jogador, caçadores, itens)
+void renderMapWithHUD3() {
+    printf("\033[2J\033[H");
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    int termWidth = w.ws_col;
+    int termHeight = w.ws_row;
+    int marginX = (termWidth - WIDTH) / 2;
+    int marginY = (termHeight - HEIGHT - 3) / 2;
+
+    for (int y = 0; y < marginY; y++) {
+        printf("\n");
+    }
+
+    // HUD
+    for (int i = 0; i < marginX; i++) printf(" ");
+    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
+
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int i = 0; i < marginX; i++) printf(" ");
+        for (int x = 0; x < WIDTH; x++) {
+            if (x == playerX && y == playerY) {
+                printf("P"); // Representação do jogador
+            } else {
+                int isHunter = 0;
+                for (int i = 0; i < MAX_HUNTERS_DIFICIL; i++) {
+                    if (hunters3[i].active && x == hunters3[i].x && y == hunters3[i].y) {
+                        printf("H"); // Representação do caçador
+                        isHunter = 1;
+                        break;
+                    }
+                }
+                if (!isHunter) {
+                    if (x == keyX && y == keyY && !hasKey) {
+                        printf("🔑"); // Representação da chave
+                    } else if (x == gasX && y == gasY && !hasGasoline) {
+                        printf("⛽"); // Representação da gasolina
+                    } else if (x == carX && y == carY) {
+                        printf("🚘"); // Representação do carro
+                    } else if (map[y][x] == '#') {
+                        printf("█"); // Representação da parede
+                    } else if (map[y][x] == '|') {
+                        printf("|"); // Representação da porta trancada
+                    } else if (map[y][x] == 'l') {
+                        printf("🚪"); // Porta destrancada
+                    } else {
+                        printf(" ");
+                    }
+                }
+            }
+        }
+        printf("\n");
+    }
+    
+}
+
+// Função para verificar se o jogador coletou algum item
+void checkForItems3() {
+    if (playerX == keyX && playerY == keyY && !hasKey) {
+        hasKey = 1;
+        printf("Você pegou a chave!\n");
+    }
+    if (playerX == gasX && playerY == gasY && !hasGasoline) {
+        hasGasoline = 1;
+        printf("Você pegou a gasolina!\n");
+    }
+    if (playerX == carX && playerY == carY && hasKey && hasGasoline) {
+        victoryScreen3();
+    }
+}
+
+// Função para movimentar o jogador
 void movePlayer3(char direction) {
     int newX = playerX;
     int newY = playerY;
@@ -180,104 +262,7 @@ void movePlayer3(char direction) {
     }
 }
 
-// Função que verifica se o jogador coletou algum item
-void checkForItems3() {
-    if (playerX == keyX && playerY == keyY && !hasKey) {
-        hasKey = 1;
-        printf("Você pegou a chave!\n");
-    }
-    if (playerX == gasX && playerY == gasY && !hasGasoline) {
-        hasGasoline = 1;
-        printf("Você pegou a gasolina!\n");
-    }
-    if (playerX == carX && playerY == carY && hasKey && hasGasoline) {
-        victoryScreen3();
-    }
-}
-
-
-
-
-// Funções de threads e renderização
-void* spawnHunter3(void* arg) {
-    while (!gameOver) {
-        sleep(5);
-        for (int i = 0; i < MAX_HUNTERS_DIFICIL; i++) {
-            if (!hunters3[i].active) {
-                placeRandomItem3(&hunters3[i].x, &hunters3[i].y);
-                hunters3[i].active = 1;
-                break;
-            }
-        }
-    }
-    return NULL;
-}
-
-void renderInventoryHUD3(int marginX) {
-    for (int i = 0; i < marginX; i++) {
-        printf(" ");
-    }
-    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
-
-    for (int i = 0; i < marginX; i++) {
-        printf(" ");
-    }
-    for (int i = 0; i < WIDTH; i++) {
-        printf("=");
-    }
-    printf("\n");
-}
-
-void renderMapWithHUD3() {
-    printf("\033[2J\033[H");
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-
-    int termWidth = w.ws_col;
-    int termHeight = w.ws_row;
-    int marginX = (termWidth - WIDTH) / 2;
-    int marginY = (termHeight - HEIGHT - 3) / 2;
-
-    for (int i = 0; i < marginY; i++) {
-        printf("\n");
-    }
-
-    renderInventoryHUD3(marginX);
-
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int i = 0; i < marginX; i++) {
-            printf(" ");
-        }
-        for (int x = 0; x < WIDTH; x++) {
-            if (x == playerX && y == playerY) {
-                printf("P");
-            } else {
-                int isHunter = 0;
-                for (int i = 0; i < MAX_HUNTERS_DIFICIL; i++) {
-                    if (hunters3[i].active && x == hunters3[i].x && y == hunters3[i].y) {
-                        printf("H");
-                        isHunter = 1;
-                        break;
-                    }
-                }
-                if (!isHunter) {
-                    if (x == keyX && y == keyY && !hasKey) {
-                        printf("K");
-                    } else if (x == gasX && y == gasY && !hasGasoline) {
-                        printf("G");
-                    } else if (x == carX && y == carY) {
-                        printf("C");
-                    } else {
-                        printf("%c", map[y][x]);
-                    }
-                }
-            }
-        }
-        printf("\n");
-    }
-    fflush(stdout);
-}
-
+// Função para movimentar os caçadores
 void* hunterMovement3(void* arg) {
     while (!gameOver) {
         moveHunters3();
@@ -287,6 +272,17 @@ void* hunterMovement3(void* arg) {
     return NULL;
 }
 
+// Função para criar portas periodicamente
+void* doorSpawner(void* arg) {
+    while (!gameOver) {
+        sleep(3);
+        placeDoor();
+        renderMapWithHUD3();
+    }
+    return NULL;
+}
+
+// Função principal do jogo
 void startGameDificil() {
     initializeGame3();
     keyboardInit();
