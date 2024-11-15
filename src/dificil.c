@@ -95,7 +95,7 @@ void moveHunters3() {
         if (hunters3[i].active) {
             int dx = 0, dy = 0;
 
-            // Determina a direção básica para o jogador
+            // Determina direção para o jogador
             if (hunters3[i].x < playerX) dx = 1;
             else if (hunters3[i].x > playerX) dx = -1;
 
@@ -105,24 +105,29 @@ void moveHunters3() {
             int targetX = hunters3[i].x + dx;
             int targetY = hunters3[i].y + dy;
 
-            // Verifica se a direção básica está bloqueada
-            if (map[targetY][targetX] == '#' || !canMove3(targetX, targetY)) {
-                // Tenta alternativas: mover apenas em x ou apenas em y
-                if (dx != 0 && canMove3(hunters3[i].x + dx, hunters3[i].y)) {
-                    hunters3[i].x += dx;
-                } else if (dy != 0 && canMove3(hunters3[i].x, hunters3[i].y + dy)) {
-                    hunters3[i].y += dy;
-                }
-                // Se ambos estão bloqueados, tenta rotas laterais
-                else if (canMove3(hunters3[i].x, hunters3[i].y + dy)) {
-                    hunters3[i].y += dy;
-                } else if (canMove3(hunters3[i].x + dx, hunters3[i].y)) {
-                    hunters3[i].x += dx;
-                }
-            } else {
-                // Movimenta na direção pretendida se estiver livre
+            // Verifica se a direção pretendida contém uma porta trancada
+            if (map[targetY][targetX] == '|') {
+                // Jason quebra a porta e não se move nesta iteração
+                map[targetY][targetX] = ' '; // Quebra a porta
+                printf("Jason quebrou uma porta trancada em (%d, %d)!\n", targetX, targetY);
+                continue; // Para a iteração atual sem mover o caçador
+            }
+
+            // Verifica se pode mover para a posição pretendida
+            if (canMove3(targetX, targetY)) {
                 hunters3[i].x = targetX;
                 hunters3[i].y = targetY;
+            } else {
+                // Tenta contornar obstáculos
+                if (canMove3(hunters3[i].x, hunters3[i].y + dy)) { // Move só no eixo Y
+                    hunters3[i].y += dy;
+                } else if (canMove3(hunters3[i].x + dx, hunters3[i].y)) { // Move só no eixo X
+                    hunters3[i].x += dx;
+                } else if (canMove3(hunters3[i].x - dx, hunters3[i].y)) { // Tenta oposto em X
+                    hunters3[i].x -= dx;
+                } else if (canMove3(hunters3[i].x, hunters3[i].y - dy)) { // Tenta oposto em Y
+                    hunters3[i].y -= dy;
+                }
             }
 
             // Verifica colisão com o jogador
@@ -132,6 +137,7 @@ void moveHunters3() {
         }
     }
 }
+
 
 // Função para verificar se o jogador pode se mover para uma posição específica
 int canMove3(int newX, int newY) {
