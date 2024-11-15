@@ -3,8 +3,8 @@
 
 #include "hunter.h"
 
-#define WIDTH 80
-#define HEIGHT 30
+#define WIDTH 60
+#define HEIGHT 20
 #define MAX_HUNTERS_FACIL 3
 
 // Declaração das variáveis globais e funções específicas do modo fácil...

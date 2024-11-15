@@ -17,7 +17,7 @@
 #include "medio.h"
 #include "facil.h"
 #include "dificil.h"
-
+#include "leaderboard.h"
 int main() {
     // Inicia o menu do jogo "Camp Nightmare"
     runMenu();

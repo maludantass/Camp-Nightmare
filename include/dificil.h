@@ -4,9 +4,10 @@
 #include "hunter.h"
 #include "screen.h"
 
-#define WIDTH 80
-#define HEIGHT 30
-#define MAX_HUNTERS_DIFICIL 5 // Número máximo de caçadores no jogo
+
+#define WIDTH 60
+#define HEIGHT 20
+#define MAX_HUNTERS_DIFICIL 7// Número máximo de caçadores no jogo
 #define MAX_DOORS 10  // Número máximo de portas no jogo
 
 // Declaração das variáveis globais

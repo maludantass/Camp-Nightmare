@@ -5,8 +5,8 @@
 #include "screen.h" // Inclui screen.h para configurações de cor
 
 
-#define WIDTH 80
-#define HEIGHT 30
+#define WIDTH 60
+#define HEIGHT 20
 #define MAX_HUNTERS 5 // Número máximo de caçadores no jogo
 
 // Declaração das variáveis globais

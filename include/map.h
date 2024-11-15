@@ -1,8 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
-#define WIDTH 80
-#define HEIGHT 30
+#define WIDTH 60
+#define HEIGHT 20
 
 // Declaração das variáveis globais
 extern char map[HEIGHT][WIDTH];
