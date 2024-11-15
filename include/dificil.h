@@ -20,6 +20,7 @@ extern int hasGasoline;
 extern int keyX, keyY;
 extern int gasX, gasY;
 extern int carX, carY;
+extern struct jogador jogador;
 
 // Estrutura para representar uma porta
 typedef struct {
@@ -47,6 +48,7 @@ void* hunterMovement3(void* arg);    // Thread que controla o movimento dos caç
 void renderMapWithHUD3();            // Renderiza o mapa com o HUD
 void* doorSpawner(void* arg);        // Thread para criar portas a cada 3 segundos
 int isAdjacentToDoor(int x, int y);  // Verifica se o jogador está adjacente a uma porta destrancada
-void lockDoor(int doorIndex);        // Tranca uma porta específica
+void lockDoor(int doorIndex);   
+void breakDoor(int x, int y);   // Tranca uma porta específica
 
 #endif // DIFICIL_H

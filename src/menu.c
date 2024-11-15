@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "keyboard.h"
 #include "menu.h"
+#include "leaderboard.h" // Inclui o header para acessar as funções do ranking
 
 void displayMenu() {
     system("clear"); // Limpa a tela no Linux
@@ -12,6 +13,7 @@ void displayMenu() {
     printf("2. Carregar Jogo\n");
     printf("3. Opções\n");
     printf("4. Sair\n");
+    printf("5. Ver Ranking\n");
     printf("====================================\n");
     printf("Escolha uma opção: ");
 }
@@ -26,6 +28,20 @@ void displayDifficultyMenu() {
     printf("3. Difícil\n");
     printf("====================================\n");
     printf("Escolha uma opção: ");
+}
+
+// Função para exibir o ranking
+void exibirRanking() {
+    struct jogador *head = NULL;
+    loadwinnerlist(&head); // Carrega o ranking do arquivo
+    system("clear");
+    printf("====================================\n");
+    printf("            RANKING                 \n");
+    printf("====================================\n");
+    printwinnerlist(head); // Exibe os 10 melhores jogadores
+    free_winnerlist(head); // Libera a memória alocada para a lista
+    printf("Pressione qualquer tecla para voltar ao menu principal.\n");
+    getchar(); // Pausa antes de voltar ao menu principal
 }
 
 void runMenu() {
@@ -71,6 +87,9 @@ void runMenu() {
                     printf("\nSaindo...\n");
                     keyboardDestroy();
                     exit(0);
+                case '5':
+                    exibirRanking(); // Chama a função para exibir o ranking
+                    break;
                 default:
                     printf("\nOpção inválida. Tente novamente.\n");
                     break;

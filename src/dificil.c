@@ -12,114 +12,14 @@
 #include "screen.h"
 
 #include <string.h>
+#include "leaderboard.h"
 
 
 // Inicializa variáveis globais
 Hunter hunters3[MAX_HUNTERS_DIFICIL];
 Door doors[MAX_DOORS];
-
-struct jogador{
-    char nome[50];
-    int tempo;
-    struct jogador *next;
-   
-
-};
-struct jogador *head=NULL;
 struct jogador jogador;
-
-
-void add_jogador(struct jogador **head, char *nome, int time) {
-    struct jogador *n = *head;
-    struct jogador *novo = (struct jogador*) malloc(sizeof(struct jogador));
-    struct jogador *anterior = NULL;
-
-    if (!novo) {
-        fprintf(stderr, "Erro ao alocar memória para novo jogador.\n");
-        return;
-    }
-
-    strcpy(novo->nome, nome);
-    novo->tempo = time;
-    novo->next = NULL;
-
-    if (*head == NULL) {
-        *head = novo;
-        return;
-    }
-
-    if ((*head)->tempo > novo->tempo) {
-        novo->next = *head;
-        *head = novo;
-        return;
-    }
-
-    while (n != NULL && n->tempo <= novo->tempo) {
-        anterior = n;
-        n = n->next;
-    }
-
-    if (anterior != NULL) {
-        anterior->next = novo;
-    }
-    novo->next = n;
-}
-
-// Função para carregar a lista de vencedores do arquivo
-void loadwinnerlist(struct jogador **head) {
-    FILE *list = fopen("winners.txt", "r");
-    if (!list) {
-        perror("Erro ao abrir o arquivo winners.txt para leitura");
-        return;
-    }
-
-    char nome[20];
-    int tempo;
-    while (fscanf(list, "%s %d", nome, &tempo) == 2) {
-        add_jogador(head, nome, tempo);
-    }
-
-    fclose(list);
-}
-
-// Função para exibir os 10 primeiros vencedores
-void printwinnerlist(struct jogador *head) {
-    struct jogador *n = head;
-    int i = 1;
-    while (n != NULL && i <= 10) {
-        printf("%d. %s: %d ticks\n", i, n->nome, n->tempo);
-        n = n->next;
-        i++;
-    }
-    printf("\n");
-}
-
-// Função para escrever a lista de vencedores no arquivo
-void writewinnerlist(struct jogador *head) {
-    FILE *list = fopen("winners.txt", "w");
-    if (!list) {
-        perror("Erro ao abrir o arquivo winners.txt para escrita");
-        return;
-    }
-
-    struct jogador *n = head;
-    while (n != NULL) {
-        fprintf(list, "%s %d\n", n->nome, n->tempo);
-        n = n->next;
-    }
-
-    fclose(list);
-}
-
-// Função para liberar a memória da lista encadeada
-void free_winnerlist(struct jogador *head) {
-    struct jogador *tmp;
-    while (head != NULL) {
-        tmp = head;
-        head = head->next;
-        free(tmp);
-    }
-}
+struct jogador *head = NULL;
 
 
 void initializeDoors() {
@@ -146,7 +46,10 @@ void placeRandomItem3(int *x, int *y) {
 }
 
 // Função de tela de vitória
-void victoryScreen3() {
+void victoryScreen3(char *nome) {
+  // Declara jogador localmente
+    jogador.tempo = getTimeDiff();
+
     screenDestroy();
     screenClear();
     printf("\033[2J\033[H");
@@ -158,15 +61,14 @@ void victoryScreen3() {
     printf("\033[0m");
     printf("\033[?25h");
 
-    jogador.tempo =getTimeDiff();
-    
    
+
     loadwinnerlist(&head);
-    add_jogador(&head,jogador.nome,jogador.tempo);
+    add_jogador(&head, jogador.nome, jogador.tempo);
     printwinnerlist(head);
     writewinnerlist(head);
     free_winnerlist(head);
-    
+
     exit(0);
 }
 
@@ -358,7 +260,7 @@ void checkForItems3() {
         printf("Você pegou a gasolina!\n");
     }
     if (playerX == carX && playerY == carY && hasKey && hasGasoline) {
-        victoryScreen3();
+        victoryScreen3(jogador.nome);
     }
 }
 
@@ -391,16 +293,12 @@ void movePlayer3(char direction) {
 }
 
 
-void telaverificar(char *nome,int tamanho){
-    
+void telaverificar(char *nome, int tamanho) {
     keyboardDestroy();
     printf("Digite seu nome: ");
     
-    fgets(nome, sizeof(nome), stdin);
-
+    fgets(nome, tamanho, stdin);
     nome[strcspn(nome, "\n")] = 0;
-    strcpy(jogador.nome,nome);
-    
 }
 // Função para movimentar os caçadores
 void* hunterMovement3(void* arg) {
@@ -417,7 +315,11 @@ void* hunterMovement3(void* arg) {
 // Função principal do jogo
 void startGameDificil() {
     gameOver = 0;
-    telaverificar(jogador.nome,sizeof(jogador.nome));
+   // Declara jogador localmente
+
+    // Captura o nome do jogador
+    telaverificar(jogador.nome, sizeof(jogador.nome));
+
     initializeGame3();
     keyboardInit();
     timerInit(0);
@@ -426,26 +328,18 @@ void startGameDificil() {
     pthread_create(&hunterThread, NULL, hunterMovement3, NULL);
     pthread_create(&spawnThread, NULL, spawnHunter3, NULL);
 
-
     char input;
     while (1) {
-
-      
         renderMapWithHUD3();
         scanf("%c", &input);
         movePlayer3(input);
-        if(gameOver){
+        if (gameOver) {
             break;
         }
-       
     }
-   
-
-
-   
 
     pthread_join(hunterThread, NULL);
     pthread_join(spawnThread, NULL);
-    
+
     keyboardDestroy();
 }
