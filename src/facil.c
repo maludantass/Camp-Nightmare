@@ -52,22 +52,33 @@ void* spawnHunter1(void* arg) {
 }
 
 // Função que renderiza o mapa e todos os elementos (jogador, caçadores, itens)
+// Função que renderiza o mapa e todos os elementos (jogador, caçadores, itens) no modo fácil
+// Função que renderiza o mapa e todos os elementos (jogador, caçadores, itens) no modo fácil
 void renderMap1() {
-    printf("\033[2J\033[H");
+    printf("\033[2J\033[H"); // Limpa a tela e posiciona o cursor no canto superior esquerdo
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
     int termWidth = w.ws_col;
     int termHeight = w.ws_row;
     int marginX = (termWidth - WIDTH) / 2;
-    int marginY = (termHeight - HEIGHT) / 2;
+    int marginY = (termHeight - HEIGHT - 3) / 2; // Ajuste para espaço do HUD
 
-    for (int y = 0; y < marginY; y++) {
+    // Adiciona margem vertical antes do HUD
+    for (int y = 0; y < marginY - 1; y++) {
         printf("\n");
     }
 
+    // Exibe o HUD
+    for (int i = 0; i < marginX; i++) printf(" ");
+    printf("Chave: %s | Gasolina: %s\n",
+           hasKey ? "Coletada" : "Não coletada",
+           hasGasoline ? "Coletada" : "Não coletada");
+
+    // Renderiza o mapa
     for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < marginX; x++) {
+        // Adiciona margem horizontal
+        for (int i = 0; i < marginX; i++) {
             printf(" ");
         }
         for (int x = 0; x < WIDTH; x++) {
@@ -84,21 +95,25 @@ void renderMap1() {
                 }
                 if (!isHunter) {
                     if (x == keyX && y == keyY && !hasKey) {
-                        printf("K"); // Representação da chave
+                        printf("🔑"); // Representação da chave
                     } else if (x == gasX && y == gasY && !hasGasoline) {
-                        printf("G"); // Representação da gasolina
+                        printf("⛽"); // Representação da gasolina
                     } else if (x == carX && y == carY) {
                         printf("C"); // Representação do carro
+                    } else if (map[y][x] == '#') {
+                        printf("\033[40m \033[0m"); // Pinta a parede com fundo preto
                     } else {
-                        printf("%c", map[y][x]);
+                        printf(" "); // Espaço vazio
                     }
                 }
             }
         }
         printf("\n");
     }
+
     fflush(stdout);
 }
+
 
 // Função que verifica se o jogador coletou algum item
 void checkForItems1() {

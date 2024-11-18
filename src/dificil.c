@@ -69,6 +69,9 @@ void victoryScreen3(char *nome) {
     writewinnerlist(head);
     free_winnerlist(head);
 
+    keyboardDestroy();
+              
+
     exit(0);
 }
 
@@ -84,6 +87,8 @@ void gameOverScreen3() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
+
+    keyboardDestroy();
  
     exit(0);
    
@@ -321,7 +326,7 @@ void* hunterMovement3(void* arg) {
 // Função principal do jogo
 void startGameDificil() {
     gameOver = 0;
-   // Declara jogador localmente
+   
 
     // Captura o nome do jogador
     telaverificar(jogador.nome, sizeof(jogador.nome));

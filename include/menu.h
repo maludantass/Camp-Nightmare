@@ -5,3 +5,4 @@ void startGameMedio();
 void displayDifficultyMenu();
 void startGameFacil();
 void startGameDificil();
+void clearInputBuffer();
