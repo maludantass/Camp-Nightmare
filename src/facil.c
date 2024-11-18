@@ -229,7 +229,7 @@ void startGameFacil() {
         renderMap1();
         scanf(" %c", &input);
         movePlayer1(input);
-        usleep(50000);
+      
     }
 
     pthread_join(hunterThread, NULL);
