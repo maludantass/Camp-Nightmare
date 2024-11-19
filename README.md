@@ -14,7 +14,6 @@ Um dos diferenciais do Camp-Nightmare é
 ### Dicas:
 ------- falar sobre dicas aqui ---------
 
----
 
 ## ♟️ Executando o Jogo
 Para executar Camp-Nightmare, siga estas etapas:
