@@ -17,3 +17,15 @@ Um dos diferenciais do Camp-Nightmare é
 ---
 
 ## ♟️ Executando o Jogo
+Para executar Camp-Nightmare, siga estas etapas:
+
+Clone este repositório em sua máquina:
+git clone https://github.com/maludantass/Camp-Nightmare
+
+----- instruções aqui -----------
+
+Divirta-se jogando Camp-Nightmare com seus amigos!
+## 👩‍💻 Membros
+Maria Luíza Dantas - mldt@cesar.school 📩
+João Henrique Micucci - jhmm@cesar.school 📩
+Antônio Crisanto - actf@cesar.school 📩
