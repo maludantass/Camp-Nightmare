@@ -7,6 +7,8 @@
 #include <sys/ioctl.h>
 #include <time.h>
 #include "facil.h"
+#include "keyboard.h"
+#include "screen.h"
 
 Hunter hunters1[MAX_HUNTERS_FACIL];
 
@@ -71,7 +73,7 @@ void renderMap1() {
 
     // Exibe o HUD
     for (int i = 0; i < marginX; i++) printf(" ");
-    printf("Chave: %s | Gasolina: %s\n",
+    printf("🔑 %s | ⛽ %s\n",
            hasKey ? "Coletada" : "Não coletada",
            hasGasoline ? "Coletada" : "Não coletada");
 
@@ -176,19 +178,25 @@ void movePlayer1(char direction) {
 
 // Função de tela de vitória
 void victoryScreen1() {
+    screenDestroy();
+    screenClear();
     printf("\033[2J\033[H");
+    
     printf("###########################\n");
     printf("#         VITÓRIA         #\n");
     printf("###########################\n");
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
+   
     exit(0);
 }
 
 // Função de tela de Game Over
 void gameOverScreen1() {
+    gameOver=1;
+    screenDestroy();
+    screenClear();
     printf("\033[2J\033[H");
     printf("###########################\n");
     printf("#        GAME OVER        #\n");
@@ -196,8 +204,11 @@ void gameOverScreen1() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
+
+    keyboardDestroy();
+ 
     exit(0);
+    
 }
 
 // Função da thread para movimentar os caçadores
@@ -212,7 +223,9 @@ void* hunterMovement1(void* arg) {
 
 // Função principal do jogo no modo médio
 void startGameFacil() {
+    gameOver = 0;
     initializeGame1();
+    keyboardInit();
 
     pthread_t hunterThread, spawnThread;
     if (pthread_create(&hunterThread, NULL, hunterMovement1, NULL) != 0) {
@@ -225,10 +238,13 @@ void startGameFacil() {
     }
 
     char input;
-    while (!gameOver) {
+    while (1) {
         renderMap1();
         scanf(" %c", &input);
         movePlayer1(input);
+        if(gameOver){
+            break;
+        }
       
     }
 
