@@ -73,7 +73,7 @@ void renderMap1() {
 
     // Exibe o HUD
     for (int i = 0; i < marginX; i++) printf(" ");
-    printf("🔑 %s | ⛽ %s\n",
+    printf("🔑 %s | ⛽ %s\n",   
            hasKey ? "Coletada" : "Não coletada",
            hasGasoline ? "Coletada" : "Não coletada");
 
