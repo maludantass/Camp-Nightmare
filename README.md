@@ -39,5 +39,6 @@ Divirta-se jogando Camp-Nightmare com seus amigos!
   </li>
 </ul>
 
-<a href="https://github.com/maludantass/Camp-Nightmare">
-  <img src="https://contrib.rocks/image?repo=maludantass/Camp-Nightmare" />
+<a href="https://github.com/maludantass/Camp-Nightmare/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=maludantass/Camp-Nightmare" />
+</a>
