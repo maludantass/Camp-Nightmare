@@ -16,7 +16,8 @@ Um dos diferenciais do Camp-Nightmare é:
   - Use `W`, `S`, `A`, `D` para mover para cima, baixo, esquerda, direita.
 
 ### Dicas:
-Se voce eta muito proximo do jason tente o chegar perto de um
+
+Se você estiver muito próximo do Jason, tente se aproximar de uma porta. Ao alcançar a porta, é possível trancá-la, impedindo que ele consiga passar. Além disso, ao segurar a tecla que já está pressionando, você pode aumentar sua velocidade de movimento, facilitando a fuga.
 
 
 ## ♟️ Executando o Jogo
