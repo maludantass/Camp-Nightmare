@@ -25,7 +25,20 @@ git clone https://github.com/maludantass/Camp-Nightmare
 ----- instruções aqui -----------
 
 Divirta-se jogando Camp-Nightmare com seus amigos!
+
 ## 👩‍💻 Membros
-Maria Luíza Dantas - mldt@cesar.school 📩
-João Henrique Micucci - jhmm@cesar.school 📩
-Antônio Crisanto - actf@cesar.school 📩
+
+<ul>
+  <li>
+    João Micucci - jhmm@cesar.school 📩
+  </li>
+   <li>
+    Malu Dantas - mldt@cesar.school 📩
+  </li>
+  <li>
+    Antônio Crisanto - actf@cesar.school  📩
+  </li>
+</ul>
+
+<a href="https://github.com/maludantass/Camp-Nightmare">
+  <img src="https://contrib.rocks/image?repo=maludantass/Camp-Nightmare" />
