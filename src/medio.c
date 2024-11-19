@@ -7,8 +7,11 @@
 #include <sys/ioctl.h>
 #include <time.h>
 #include "medio.h"
+#include "keyboard.h"
 #include "screen.h"
+#include "menu.h"
 
+#include <string.h>
 Hunter hunters[MAX_HUNTERS]; // Array de caçadores, inicializado aqui
 
 // Função para verificar se o jogador pode se mover para uma posição específica
@@ -193,6 +196,11 @@ void movePlayer2(char direction) {
 
 // Função de tela de vitória
 void victoryScreen2() {
+
+    screenDestroy();
+    screenClear();
+
+
     printf("\033[2J\033[H");
     printf("###########################\n");
     printf("#         VITÓRIA         #\n");
@@ -200,12 +208,19 @@ void victoryScreen2() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
-    exit(0);
+
+    keyboardDestroy();
+
+    runMenu();
+   
+    
 }
 
 // Função de tela de Game Over
 void gameOverScreen2() {
+    gameOver = 1;
+    screenDestroy();
+    screenClear();
     printf("\033[2J\033[H");
     printf("###########################\n");
     printf("#        GAME OVER        #\n");
@@ -213,8 +228,12 @@ void gameOverScreen2() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
-    fflush(stdout);
-    exit(0);
+
+    keyboardDestroy();
+    runMenu();
+ 
+   
+   
 }
 
 // Função da thread para movimentar os caçadores
@@ -229,7 +248,11 @@ void* hunterMovement2(void* arg) {
 
 // Função principal do jogo no modo médio
 void startGameMedio() {
+    
+    gameOver = 0;
     initializeGame2();
+    keyboardInit();
+    
 
     pthread_t hunterThread, spawnThread;
     if (pthread_create(&hunterThread, NULL, hunterMovement2, NULL) != 0) {
@@ -242,15 +265,19 @@ void startGameMedio() {
     }
 
     char input;
-    while (!gameOver) {
+    while (1) {
         renderMapWithHUD();
-        scanf(" %c", &input);
+        scanf("%c", &input);
         movePlayer2(input);
-        usleep(50000);
+        if(gameOver){
+            break;
+        }
     }
 
     pthread_join(hunterThread, NULL);
     pthread_join(spawnThread, NULL);
+
+    keyboardDestroy();
 }
 
 

@@ -19,10 +19,10 @@ void displayMenu() {
     int terminalHeight = 36;
 
     // Espaçamento ajustado para centralizar verticalmente
-    int verticalPadding = ((terminalHeight - 14) / 2)-4; // Mantém o centro relativo ao terminal
+    int verticalPadding = ((terminalHeight - 14) / 2) - 20; // Mantém o centro relativo ao terminal
 
     // Espaçamento para centralizar horizontalmente
-    int horizontalPadding = (terminalWidth - 40) / 2;
+    int horizontalPadding = (terminalWidth - 80) / 2; // Ajustado para o novo texto
 
     // Limpa a tela
     system("clear");
@@ -40,48 +40,55 @@ void displayMenu() {
     }
 
     // Exibe o menu com padding horizontal
+    printHorizontalPadding();
+    printf("                   ▄████▄   ▄▄▄       ███▄ ▄███▓ ██▓███                      \n");
+    printHorizontalPadding();
+    printf("                  ▒██▀ ▀█  ▒████▄    ▓██▒▀█▀ ██▒▓██░  ██▒                    \n");
+    printHorizontalPadding();
+    printf("                  ▒▓█    ▄ ▒██  ▀█▄  ▓██    ▓██░▓██░ ██▓▒                    \n");
+    printHorizontalPadding();
+    printf("                  ▒▓▓▄ ▄██▒░██▄▄▄▄██ ▒██    ▒██ ▒██▄█▓▒ ▒                    \n");
+    printHorizontalPadding();
+    printf("                  ▒ ▓███▀ ░ ▓█   ▓██▒▒██▒   ░██▒▒██▒ ░  ░                    \n");
+    printHorizontalPadding();
+    printf("                  ░ ░▒ ▒  ░ ▒▒   ▓▒█░░ ▒░   ░  ░▒▓▒░ ░  ░                    \n");
+    printHorizontalPadding();
+    printf("                    ░  ▒     ▒   ▒▒ ░░  ░      ░░▒ ░                         \n");
+    printHorizontalPadding();
+    printf("                  ░          ░   ▒   ░      ░   ░░                           \n");
+    printHorizontalPadding();
+    printf("                  ░ ░            ░  ░       ░                                \n");
+    printHorizontalPadding();
+    printf("                  ░                                                          \n");
+    printHorizontalPadding();
+    printf(" ███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ███▄ ▄███▓ ▄▄▄       ██▀███  ▓█████ \n");
+    printHorizontalPadding();
+    printf(" ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██▒▀█▀ ██▒▒████▄    ▓██ ▒ ██▒▓█   ▀ \n");
+    printHorizontalPadding();
+    printf("▓██  ▀█ ██▒▒██▒▒██░▄▄▄░▒██▀▀██░▒ ▓██░ ▒░▓██    ▓██░▒██  ▀█▄  ▓██ ░▄█ ▒▒███   \n");
+    printHorizontalPadding();
+    printf("▓██▒  ▐▌██▒░██░░▓█  ██▓░▓█ ░██ ░ ▓██▓ ░ ▒██    ▒██ ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓█  ▄ \n");
+    printHorizontalPadding();
+    printf("▒██░   ▓██░░██░░▒▓███▀▒░▓█▒░██▓  ▒██▒ ░ ▒██▒   ░██▒ ▓█   ▓██▒░██▓ ▒██▒░▒████▒\n");
+    printHorizontalPadding();
+    printf("░ ▒░   ▒ ▒ ░▓   ░▒   ▒  ▒ ░░▒░▒  ▒ ░░   ░ ▒░   ░  ░ ▒▒   ▓▒█░░ ▒▓ ░▒▓░░░ ▒░ ░\n");
+    printHorizontalPadding();
+    printf("░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░    ░  ░      ░  ▒   ▒▒ ░  ░▒ ░ ▒░ ░ ░  ░\n");
+    printHorizontalPadding();
+    printf("   ░   ░ ░  ▒ ░░ ░   ░  ░  ░░ ░  ░      ░      ░     ░   ▒     ░░   ░    ░   \n");
+    printHorizontalPadding();
+    printf("         ░  ░        ░  ░  ░  ░                ░         ░  ░   ░        ░  ░\n");
+
+
+    printHorizontalPadding();
+    printf("\n\n\t\t\t 1. Modos de Jogo\n");
+    printHorizontalPadding();
+    printf("\n\t\t\t 2. Sair\n");
+    printHorizontalPadding();
+    printf("\n\t\t\t 3. Ver Ranking\n");
+
+
    
-   
-
-    printHorizontalPadding();
-    printf("  / ___|__ _ _ __ ___  _ __   \n");
-    printHorizontalPadding();
-    printf(" | |   / _` | '_ ` _ \\| '_ \\ \n");
-    printHorizontalPadding();
-    printf(" | |__| (_| | | | | | | |_) | \n");
-    printHorizontalPadding();
-    printf("  \\____\\__,_|_| |_| |_| .__/ \n");
-    printHorizontalPadding();
-    printf("                      |_|    \n");
-    printHorizontalPadding();
-    printf("  _   _ _       _     _      \n");
-    printHorizontalPadding();
-    printf(" | \\ | (_) __ _| |__ | |_ _ __ ___   __ _ _ __ ___\n");
-    printHorizontalPadding();
-    printf(" |  \\| | |/ _` | '_ \\| __| '_ ` _ \\ / _` | '__/ _ \\\n");
-    printHorizontalPadding();
-    printf(" | |\\  | | (_| | | | | |_| | | | | | (_| | | |  __/\n");
-    printHorizontalPadding();
-    printf(" |_| \\_|_|\\__, |_| |_|\\__|_| |_| |_|\\__,_|_|  \\___|\n");
-    printHorizontalPadding();
-    printf("          |___/                                   \n");
-
-    printHorizontalPadding();
-    printf("\n");
-   
-
-    printHorizontalPadding();
-    printf("1. Modos de Jogo\n");
-    printHorizontalPadding();
-    printf("2. Sair\n");
-    printHorizontalPadding();
-    printf("3. Ver Ranking\n");
-
-    
-    
-
-    
-    printf("\nEscolha uma opção: ");
 }
 
 
@@ -89,15 +96,28 @@ void displayMenu() {
 
 
 void displayDifficultyMenu() {
+    // Limpa a tela
     system("clear");
-    printf("====================================\n");
-    printf("        SELECIONE A DIFICULDADE      \n");
-    printf("====================================\n");
-    printf("1. Fácil\n");
-    printf("2. Médio\n");
-    printf("3. Difícil\n");
-    printf("====================================\n");
-    printf("Escolha uma opção: ");
+
+    printf("\n\n");
+
+    // Exibe a nova arte ASCII
+    printf(" ┏┓┏┓┓ ┏┓┏┓┳┏┓┳┓┏┓  ┏┓ \n");
+    printf(" ┗┓┣ ┃ ┣ ┃ ┃┃┃┃┃┣   ┣┫ \n");
+    printf(" ┗┛┗┛┗┛┗┛┗┛┻┗┛┛┗┗┛  ┛┗ \n");
+    printf("  ┳┓┳┏┓┳┏┓┳┳┓ ┳┓┏┓┳┓┏┓ \n");
+    printf("  ┃┃┃┣ ┃┃ ┃┃┃ ┃┃┣┫┃┃┣  \n");
+    printf("  ┻┛┻┻ ┻┗┛┗┛┗┛┻┛┛┗┻┛┗┛ \n");
+    printf("      ━━━━━━━━━━━      \n");
+    printf("    ┓    ┏┓┏┓┏┓┳┓      \n");
+    printf("    ┃━━  ┣ ┣┫┃ ┃┃      \n");
+    printf("    ┻    ┻ ┛┗┗┛┻┗┛     \n");
+    printf("   ┏┓    ┳┳┓┏┓┳┓┳┏┓    \n");
+    printf("   ┏┛━━  ┃┃┃┣ ┃┃┃┃┃    \n");
+    printf("   ┗━    ┛ ┗┗┛┻┛┻┗┛    \n");
+    printf("   ┏┓    ┳┓┳┏┓┳┏┓┳┓    \n");
+    printf("    ┫━━  ┃┃┃┣ ┃┃ ┃┃    \n");
+    printf("   ┗┛    ┻┛┻┻ ┻┗┛┻┗┛   \n");
 }
 
 // Função para exibir o ranking

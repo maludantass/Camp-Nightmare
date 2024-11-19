@@ -10,6 +10,7 @@
 #include "dificil.h"
 #include "keyboard.h"
 #include "screen.h"
+#include "menu.h"
 
 #include <string.h>
 #include "leaderboard.h"
@@ -70,9 +71,11 @@ void victoryScreen3(char *nome) {
     free_winnerlist(head);
 
     keyboardDestroy();
+
+    runMenu();
               
 
-    exit(0);
+   
 }
 
 // Função de tela de Game Over
@@ -89,8 +92,10 @@ void gameOverScreen3() {
     printf("\033[?25h");
 
     keyboardDestroy();
+
+    runMenu();
  
-    exit(0);
+   
    
 }
 
@@ -220,7 +225,7 @@ void renderMapWithHUD3() {
 
     // HUD
     for (int i = 0; i < marginX; i++) printf(" ");
-    printf("Chave: %s | Gasolina: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
+    printf("🔑 %s | ⛽: %s\n", hasKey ? "Coletada" : "Não coletada", hasGasoline ? "Coletada" : "Não coletada");
 
     for (int y = 0; y < HEIGHT; y++) {
         for (int i = 0; i < marginX; i++) printf(" ");
@@ -231,7 +236,7 @@ void renderMapWithHUD3() {
                 int isHunter = 0;
                 for (int i = 0; i < MAX_HUNTERS_DIFICIL; i++) {
                     if (hunters3[i].active && x == hunters3[i].x && y == hunters3[i].y) {
-                        printf("H"); // Representação do caçador
+                        printf("J"); // Representação do caçador
                         isHunter = 1;
                         break;
                     }

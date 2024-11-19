@@ -9,7 +9,7 @@
 #include "facil.h"
 #include "keyboard.h"
 #include "screen.h"
-
+#include "menu.h"
 Hunter hunters1[MAX_HUNTERS_FACIL];
 
 
@@ -188,8 +188,12 @@ void victoryScreen1() {
     printf("Pressione uma tecla para encerrar o jogo!\n");
     printf("\033[0m");
     printf("\033[?25h");
+
+    keyboardDestroy();
+
+    runMenu();
    
-    exit(0);
+    
 }
 
 // Função de tela de Game Over
@@ -207,7 +211,7 @@ void gameOverScreen1() {
 
     keyboardDestroy();
  
-    exit(0);
+    runMenu();
     
 }
 
@@ -240,7 +244,7 @@ void startGameFacil() {
     char input;
     while (1) {
         renderMap1();
-        scanf(" %c", &input);
+        scanf("%c", &input);
         movePlayer1(input);
         if(gameOver){
             break;
@@ -250,4 +254,6 @@ void startGameFacil() {
 
     pthread_join(hunterThread, NULL);
     pthread_join(spawnThread, NULL);
+
+    keyboardDestroy();
 }
