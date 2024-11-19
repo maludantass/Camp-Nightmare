@@ -14,6 +14,31 @@ Um dos diferenciais do Camp-Nightmare é
 ### Dicas:
 ------- falar sobre dicas aqui ---------
 
----
 
 ## ♟️ Executando o Jogo
+Para executar Camp-Nightmare, siga estas etapas:
+
+Clone este repositório em sua máquina:
+git clone https://github.com/maludantass/Camp-Nightmare
+
+----- instruções aqui -----------
+
+Divirta-se jogando Camp-Nightmare com seus amigos!
+
+## 👩‍💻 Membros
+
+<ul>
+  <li>
+    João Micucci - jhmm@cesar.school 📩
+  </li>
+   <li>
+    Malu Dantas - mldt@cesar.school 📩
+  </li>
+  <li>
+    Antônio Crisanto - actf@cesar.school  📩
+  </li>
+</ul>
+
+<a href="https://github.com/maludantass/Camp-Nightmare/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=maludantass/Camp-Nightmare" />
+</a>
