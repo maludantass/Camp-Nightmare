@@ -3,8 +3,10 @@
 ## 📄 Descrição
 **Camp-Nightmare** é uma releitura do clássico *Pac-Man* (1980), considerado um dos primeiros jogos da história. No jogo, os jogadores assumem o papel de uma vítima que tenta sobreviver em um labirinto sombrio enquanto foge de Jason, o aterrorizante vilão.
 ### 🚪🗝️ Trancar portas
-Um dos diferenciais do Camp-Nightmare é
-------- falar sobre esse hightlight aqui ---------
+Um dos diferenciais do Camp-Nightmare é:
+Inspirado no jogo e filme “Sexta-Feira 13”, aplicamos uma dinâmica semelhante, que ao conseguir a chave do carro e a gasolina, que têm o spawn aleatório no mapa, você conseguirá destravar o carro e ganhar o jogo :)
+(só com os dois itens, não destrava se você tiver apenas um deles).
+
 
 ---
 
@@ -12,7 +14,7 @@ Um dos diferenciais do Camp-Nightmare é
   - Use `W`, `S`, `A`, `D` para mover para cima, baixo, esquerda, direita.
 
 ### Dicas:
-------- falar sobre dicas aqui ---------
+
 
 
 ## ♟️ Executando o Jogo
