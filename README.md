@@ -57,7 +57,3 @@ Divirta-se jogando Camp-Nightmare com seus amigos!
     Antônio Crisanto - actf@cesar.school  📩
   </li>
 </ul>
-
-<a href="https://github.com/maludantass/Camp-Nightmare/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=maludantass/Camp-Nightmare" />
-</a>
