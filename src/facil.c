@@ -103,7 +103,8 @@ void renderMap1() {
                     } else if (x == carX && y == carY) {
                         printf("C"); // Representação do carro
                     } else if (map[y][x] == '#') {
-                        printf("\033[40m \033[0m"); // Pinta a parede com fundo preto
+                        screenSetColor(RED, BLACK); // Define a cor das paredes como vermelha
+                        printf("█"); // Pinta a parede com fundo preto
                     } else {
                         printf(" "); // Espaço vazio
                     }
@@ -191,7 +192,9 @@ void victoryScreen1() {
 
     keyboardDestroy();
 
-    runMenu();
+    exit(0);
+
+    
    
     
 }
@@ -211,7 +214,7 @@ void gameOverScreen1() {
 
     keyboardDestroy();
  
-    runMenu();
+    exit(0);
     
 }
 

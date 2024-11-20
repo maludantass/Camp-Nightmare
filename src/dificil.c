@@ -72,7 +72,7 @@ void victoryScreen3(char *nome) {
 
     keyboardDestroy();
 
-    runMenu();
+    exit(0);
               
 
    
@@ -93,7 +93,7 @@ void gameOverScreen3() {
 
     keyboardDestroy();
 
-    runMenu();
+    exit(0);
  
    
    

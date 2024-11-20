@@ -211,7 +211,9 @@ void victoryScreen2() {
 
     keyboardDestroy();
 
-    runMenu();
+    exit(0);
+
+    
    
     
 }
@@ -230,7 +232,8 @@ void gameOverScreen2() {
     printf("\033[?25h");
 
     keyboardDestroy();
-    runMenu();
+    
+    exit(0);
  
    
    
