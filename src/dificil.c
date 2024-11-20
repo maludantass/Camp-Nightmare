@@ -358,5 +358,5 @@ void startGameDificil() {
     pthread_join(spawnThread, NULL);
 
     keyboardDestroy();
-    // #
+    
 }
