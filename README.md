@@ -26,7 +26,23 @@ Para executar Camp-Nightmare, siga estas etapas:
 Clone este repositório em sua máquina:
 git clone https://github.com/maludantass/Camp-Nightmare
 
------ instruções aqui -----------
+INSTRUÇÕES E COMPILAÇÃO DE USO
+<li>
+ 1.Clone o repositório https://github.com/maludantass/Camp-Nightmare;
+(obs: ou no bash ou na ide)
+</li>
+<li>
+ 2. Use o comando pip install no gcc, no make o no git;
+</li>
+<li>
+ 3. Use o comando cd na pasta do projeto;
+</li>
+<li>
+ 4. Insira o comando ‘make’;
+</li>
+<li>
+ 5. Por último escreva ’./game’ e aproveite!
+</li>
 
 Divirta-se jogando Camp-Nightmare com seus amigos!
 
