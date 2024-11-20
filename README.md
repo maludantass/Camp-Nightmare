@@ -30,7 +30,7 @@ Para executar Camp-Nightmare, siga estas etapas:
 </li>
 
 <li>
- 2. Use o comando pip install no gcc, no make o no git;
+ 2. Use o comando pip install no gcc, no make e no git (pip install make e pip install git);
 </li>
 <li>
  3. Use o comando cd na pasta do projeto;
