@@ -101,7 +101,10 @@ void renderMap1() {
                     } else if (x == gasX && y == gasY && !hasGasoline) {
                         printf("⛽"); // Representação da gasolina
                     } else if (x == carX && y == carY) {
-                        printf("C"); // Representação do carro
+                        
+                        screenSetColor(CYAN, BLACK); // Define a cor do carro como ciano
+                        printf("C");
+                     
                     } else if (map[y][x] == '#') {
                         screenSetColor(RED, BLACK); // Define a cor das paredes como vermelha
                         printf("█"); // Pinta a parede com fundo preto
