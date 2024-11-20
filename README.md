@@ -23,14 +23,12 @@ Se você estiver muito próximo do Jason, tente se aproximar de uma porta. Ao al
 ## ♟️ Executando o Jogo
 Para executar Camp-Nightmare, siga estas etapas:
 
-Clone este repositório em sua máquina:
-git clone https://github.com/maludantass/Camp-Nightmare
-
-INSTRUÇÕES E COMPILAÇÃO DE USO
 <li>
- 1.Clone o repositório https://github.com/maludantass/Camp-Nightmare;
-(obs: ou no bash ou na ide)
+ 1. Clone este repositório em sua máquina:
+ git clone https://github.com/maludantass/Camp-Nightmare
+ (obs: ou no bash ou na ide)
 </li>
+
 <li>
  2. Use o comando pip install no gcc, no make o no git;
 </li>
